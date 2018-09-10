@@ -74,14 +74,24 @@
             }
             div.animeText3{
                 position: absolute;
-                top:800px; 
-                left: 50px;
+                top:820px; 
+                left: 100px;
                
                 margin:0;
                 font-size:100px;
                 color: black;
                 /*background-color:#CCCCCC;*/
             }
+
+            .medal{    
+                top: 360px;
+                bottom: 0;
+                left: 800px;
+                right: 0;
+                position: absolute;
+                margin: auto;
+            }
+
             .anime{
                 display:inline-block;
             }
@@ -300,7 +310,10 @@
             <div class="animeText fontmplus z-2" id="at1">おめでとうございます！！</div>
             <div class="animeText2 fontmplus z-2" id="at2">メダルをゲットしました！！</div>
             <div class="animeText3 fontmplus z-2" id="at3">合計歩行時間10時間を達成しました！</div>
-            
+            <div class="medal z-2" id="medal_gold">
+                <img src="../pic/medal_gold.png" width="320" height="360">
+            </div>           
+
             <div class="line3 bgcolor-16 z-2"></div>
         </div>
         <div class="fireworks">
@@ -577,6 +590,18 @@
                             ],
                             offset: firetime + 700
                         })
+                        .add({
+                            targets: ".textbox",
+                            opacity: [0,1],
+                            duration: 3000,
+                            offset: 8000,
+                        })
+                        .add({
+                            targets: ".medal",
+                            opacity: [0,1],
+                            duration: 3000,
+                            offset: 8000,
+                        })
 
                         /*
                         .add({
@@ -656,7 +681,7 @@
                         opacity: [0,1],
                         duration: 3000,
                         delay:function(elm,index, ln){
-                                    var time = 7000;
+                                    var time = 8000;
                                     var cooltime = 50;
                                     return time + index*cooltime;
                                 }
