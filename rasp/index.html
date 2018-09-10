@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>ANIME.JS ANIMATION</title>
+        <script src="anime.min.js"></script>
+        <script src="jquery-3.3.1.min.js"></script>
+
+        <link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c" rel="stylesheet">
+        <style>
+        /*********************************************************/
+            /* 色 */
+            /* 背景色 */
+            .bgcolor-bg   { background-color: #303030 }
+            /* 汎用 */
+            .bgcolor-white{ background-color: white   }
+            .bgcolor-black{ background-color: black   }   
+            .bgcolor-lblue{ background-color: #5EF3FB; }        
+
+            /* 花火用 */
+            .fworkcolor1{ background-color: #FF1461; }
+            .fworkcolor2{ background-color: #18FF92; }
+            .fworkcolor3{ background-color: #5A87FF; }
+            .fworkcolor4{ background-color: #FBF38C; }
+
+        /**********************************************************/
+
+        /**********************************************************/
+            body{
+                /*縦・横、両方のスクロールバーを非表示にする場合：*/
+                overflow:hidden;
+                margin: 0;
+
+                opacity: 0;
+                /* font-family: Helvetica Neue, Helvetica, Arial, sans-serif; */
+                -webkit-font-smoothing: antialiased;
+            }
+
+            /* 準備ができれば透明度を1にする */
+            body.ready{
+               opacity: 1;
+            }
+
+            /* フォント */
+            .fontmplus { 
+                /* font-family: 'M PLUS 1p', sans-serif; */
+                /* font-family: "Kokoro", cursive; */
+                font-family: 'M PLUS Rounded 1c', sans-serif;
+                
+            }
+
+            /* 重なり修正用 */
+            .z-2{
+                z-index: 2;
+            }
+        /************************************************************/
+
+        /************************************************************/
+            /* 描画エリア確認用 */
+            .background-area{
+                position: absolute;
+                top:1px;
+                width: 1024px;
+                height: 600px;
+            }
+            
+            /* グリッド作成用 */
+            .gridlinever{
+                width:2px;
+                height:600px;
+            }
+
+            .gridlinehor{
+                width:1024px;
+                height:2px;
+            }
+
+            .ver1{
+                position: absolute;
+                left:100px;
+            }
+            .ver2{
+                position: absolute;
+                left:200px;
+            }
+            .ver3{
+                position: absolute;
+                left:300px;
+            }
+            .ver4{
+                position: absolute;
+                left:400px;
+            }
+            .ver5{
+                position: absolute;
+                left:500px;
+            }
+            .ver6{
+                position: absolute;
+                left:600px;
+            }
+            .ver7{
+                position: absolute;
+                left:700px;
+            }
+            .ver8{
+                position: absolute;
+                left:800px;
+            }
+            .ver9{
+                position: absolute;
+                left:900px;
+            }
+            .ver10{
+                position: absolute;
+                left:1000px;
+            }
+            .hor1{
+                position: absolute;
+                top:100px;
+            }
+            .hor2{
+                position: absolute;
+                top:200px;
+            }
+            .hor3{
+                position: absolute;
+                top:300px;
+            }
+            .hor4{
+                position: absolute;
+                top:400px;
+            }
+            .hor5{
+                position: absolute;
+                top:500px;
+            }
+            .hor6{
+                position: absolute;
+                top:600px;
+            }
+            
+        /************************************************************/
+
+        /************************************************************/
+            /* テキスト表示用 */
+            /* span設定 */
+            span{
+                margin:0;
+                padding:0;
+            }
+
+            /* テキスト表示用設定 */
+            .anime{
+                display:inline-block;
+            }
+
+            /* おめでとうございます */
+            div.animeText1{
+                position: absolute; top:100px; left: 212px;
+                margin:0;
+                font-size:50px;
+                /*color: white;*/
+                color: black;
+            }
+
+            /* テキスト隠しライン */
+            .TextLine{
+                width:75px;
+                height:75px;
+
+                top: 90px;
+                bottom: 0;
+                left:600px;
+                right: 0;
+                position: absolute;
+            }
+
+        /**************************************************************/
+
+        /************************************************************/
+            /* カラフルな花火 */
+            .fworkcircle{
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+                /* 中央寄せ */                
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                position: absolute;
+                margin: auto;
+                z-index: 2;
+            }
+            
+            /* 波紋 */
+            .fring{
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+                /* 中央寄せ */                
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                position: absolute;
+                margin: auto;
+            }
+
+            /* しずく */
+            .drop{
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+                /* 中央寄せ */                
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                position: absolute;
+                margin: auto;
+            }
+        /************************************************************/
+
+        </style>
+    </head>
+    <body class="bgcolor-bg">
+    <!--************************************************************-->        
+    <!-- グリッド -->    
+        <div class="background-area bgcolor-bg"></div>
+        <div class="gridlinever ver1 bgcolor-black"></div>
+        <div class="gridlinever ver2 bgcolor-black"></div>
+        <div class="gridlinever ver3 bgcolor-black"></div>
+        <div class="gridlinever ver4 bgcolor-black"></div>
+        <div class="gridlinever ver5 bgcolor-black"></div>
+        <div class="gridlinever ver6 bgcolor-black"></div>
+        <div class="gridlinever ver7 bgcolor-black"></div>
+        <div class="gridlinever ver8 bgcolor-black"></div>
+        <div class="gridlinever ver9 bgcolor-black"></div>
+        <div class="gridlinever ver10 bgcolor-black"></div>
+        <div class="gridlinehor hor1 bgcolor-black"></div>
+        <div class="gridlinehor hor2 bgcolor-black"></div>
+        <div class="gridlinehor hor3 bgcolor-black"></div>
+        <div class="gridlinehor hor4 bgcolor-black"></div>
+        <div class="gridlinehor hor5 bgcolor-black"></div>
+        <div class="gridlinehor hor6 bgcolor-black"></div>
+    <!--************************************************************-->
+
+    <!--************************************************************-->
+    <!-- テキストアニメーション -->
+        <div class="animeText1 fontmplus z-2" id="Text1">おめでとうございます！！</div>      
+    <!--************************************************************-->
+
+    <!--************************************************************-->
+    <!-- 花火 -->
+        <div class="fireworks">
+            <div class="fworkcircle fworkcolor1"></div>
+            <div class="fworkcircle fworkcolor1"></div>
+            <div class="fworkcircle fworkcolor1"></div>
+            <div class="fworkcircle fworkcolor1"></div>
+            <div class="fworkcircle fworkcolor1"></div>
+            <div class="fworkcircle fworkcolor1"></div>
+            <div class="fworkcircle fworkcolor1"></div>
+            <div class="fworkcircle fworkcolor1"></div>
+            <div class="fworkcircle fworkcolor1"></div>
+            <div class="fworkcircle fworkcolor1"></div>
+            <div class="fworkcircle fworkcolor2"></div>
+            <div class="fworkcircle fworkcolor2"></div>
+            <div class="fworkcircle fworkcolor2"></div>
+            <div class="fworkcircle fworkcolor2"></div>
+            <div class="fworkcircle fworkcolor2"></div>
+            <div class="fworkcircle fworkcolor2"></div>
+            <div class="fworkcircle fworkcolor2"></div>
+            <div class="fworkcircle fworkcolor2"></div>
+            <div class="fworkcircle fworkcolor2"></div>
+            <div class="fworkcircle fworkcolor2"></div>
+            <div class="fworkcircle fworkcolor3"></div>
+            <div class="fworkcircle fworkcolor3"></div>
+            <div class="fworkcircle fworkcolor3"></div>
+            <div class="fworkcircle fworkcolor3"></div>
+            <div class="fworkcircle fworkcolor3"></div>
+            <div class="fworkcircle fworkcolor3"></div>
+            <div class="fworkcircle fworkcolor3"></div>            
+            <div class="fworkcircle fworkcolor3"></div>
+            <div class="fworkcircle fworkcolor3"></div>
+            <div class="fworkcircle fworkcolor3"></div>
+            <div class="fworkcircle fworkcolor4"></div>
+            <div class="fworkcircle fworkcolor4"></div>
+            <div class="fworkcircle fworkcolor4"></div>
+            <div class="fworkcircle fworkcolor4"></div>
+            <div class="fworkcircle fworkcolor4"></div>
+            <div class="fworkcircle fworkcolor4"></div>
+            <div class="fworkcircle fworkcolor4"></div>
+            <div class="fworkcircle fworkcolor4"></div>
+            <div class="fworkcircle fworkcolor4"></div>
+            <div class="fworkcircle fworkcolor4"></div>
+            <div id="fring1" class="fring bgcolor-white"></div>
+            <div id="fring2" class="fring bgcolor-bg"></div>
+            <div class="TextLine bgcolor-white z-2"></div>
+            <div id="drop1" class="drop bgcolor-lblue"></div>
+            <div id="drop2" class="drop bgcolor-lblue"></div>
+        </div>
+        <!--********************************************************-->
+        <script>
+        /*************************************************************/
+            var Animation = (function() {
+                /* タイムライン */
+                /* 花火 */
+                var Fireworks = anime.timeline({autoplay: false});
+
+            /*********************************************************/
+            /* 花火のタイムライン */
+                Fireworks
+                    /* 花火 */
+                        .add({
+                            targets: ".fworkcircle",
+                            translateX:[
+                                {
+                                    value: function(elm,index, ln){
+                                        return anime.random(-600,600);
+                                    },
+                                    duration: 1500,
+                                    delay:0,
+                                    easing: "easeOutExpo",
+                                }
+                            ],
+                            translateY:[
+                                {
+                                    value: function(elm,index, ln){
+                                        return anime.random(-450,450);
+                                    },
+                                    duration: 1500,
+                                    delay:0,
+                                    easing: "easeOutExpo",
+                                }
+                            ], 
+                            scale:[
+                              { value: function(elm,index, ln){
+                                    return anime.random(1.2, 1.8);
+                                },
+                                duration:function(elm,index, ln){
+                                    return 300;
+                                }, 
+                                delay: 0,
+                                easing: 'easeOutExpo',
+                              },
+                              {
+                                value: 0,
+                                duration: 700,
+                                delay: 0,
+                                easing: "easeOutQuad",
+                              }
+                            ],
+                            offset: 0,                           
+                        })
+                    /*******************************/
+                    /* 波紋 */
+                        .add({
+                            targets: "#fring1",
+                            scale: [1.1, 10],
+                            duration: 1000,
+                            easing: "easeOutExpo",
+                            offset: 0
+                        })
+                        .add({
+                            targets: "#fring2",
+                            scale: [1.0, 9.9],
+                            duration: 1000,
+                            easing: "easeOutExpo",
+                            offset: 0
+                        })
+                        .add({                            
+                            targets: "#fring1",
+                            opacity: [1,0],
+                            duration: 1000,
+                            easing: "easeOutExpo",
+                            offset: 100
+                        })
+                        .add({
+                            targets: "#fring2",
+                            opacity: [1,0],
+                            duration: 1000,
+                            easing: "easeOutExpo",
+                            offset: 1000
+                        })
+                    /**********************************/
+                    /* テキスト隠し */
+                        .add({
+                            targets: ".TextLine",
+                            translateX:[
+                                { value: [-700, 1024], duration: 3700, delay:0, elasticity:0, easing: "easeOutExpo"},
+                            ],
+                            scaleX:[
+                                { value: 10, duration: 150, delay:50, easing: "easeOutExpo"},
+                                { value: 1, duration: 700, delay: 240, elasticity: 0}
+                            ],
+                            offset: 2000
+                        })
+                    /***********************************/
+                    /* しずく */
+                        .add({
+                            targets: "#drop1",
+                            scale: [0,1],
+                            duration: 200,
+                            elasticity: 0,
+                            offset: 200
+                        })
+                        .add({
+                            targets: "#drop1",
+                            translateY:[
+                                { value: 1000, duration: 1700, elasticity: 0, easing: "easeInBack"}
+                            ],
+                            scaleY:[
+                                { value: 1.5, duration: 100, elasticity: 0, delay: 0, easing: "easeOutExpo"},
+                                { value: 1, duration: 500, elasticity: 10, },
+                                { value: 1.5, duration: 1000, elasticity: 0, delay: 400, easing: "easeOutExpo"}
+                            ],
+                            offset: 300
+                        })
+                        .add({
+                            targets: "#drop2",
+                            translateY:[
+                                { value: [600,0], duration: 1000, elasticity:0, easing:"easeOutCirc"}
+                            ],
+                            scaleY:[
+                                { value: 1.5, duration: 100, elasticity:0, delay: 0, easing: "easeOutExpo"},
+                                { value: 1, duration: 500, elasticity: 0, delay: 0}
+                            ],
+                            offset: 2000
+                        })
+                    /**********************************/
+
+
+            /*******************************************************/
+
+            /* イニシャライズ */
+                function initialize(){
+                    /* bodyにreadyクラスを追加する */
+                    document.body.classList.add("ready");
+
+                    /* テキストの準備 */
+                    spanningFunc(".animeText1");
+
+                    /* アニメーションの再生 */
+                    Fireworks.play();
+
+                /****************************************************/
+                /* テキストアニメーション */
+                /* おめでとうございます */
+                    var TextAnime1 = anime({
+                        targets:"#Text1 .anime",
+                        translateY:[
+                            { 
+                              value:[200,0],
+                              duration:1000,
+                              delay:function(elm,index, ln){
+                                    var time = 200;
+                                    var cooltime = 50;
+                                    return time + index*cooltime;
+                                }
+                            }
+                        ],
+                        opacity:[
+                            { 
+                              value: [0,1], 
+                              duration:1000,
+                              delay:function(elm,index, ln){
+                                    var time = 200;
+                                    var cooltime = 50;
+                                    return time + index*cooltime;
+                                }
+                            },
+                            { 
+                              value: 0,
+                              duration:100,
+                              delay:function(elm,index, ln){
+                                    var time = 785;
+                                    var cooltime = 1;
+                                    return time + index*cooltime;
+                                }
+                            }
+                        ],
+                    });
+                /********************************************************/
+
+                /********************************************************/
+                /* 文字列を分割し一文字ずつspanに放り込む関数 */
+                    function spanningFunc (_target){
+                        var elms = document.querySelectorAll(_target);
+                        elms.forEach(function (elm){
+                            var myText = elm.textContent;
+                            elm.innerHTML = null;
+                            myText.split('').forEach(function (c) {
+                                if (c == ' '){
+                                    elm.innerHTML += '<span class="anime fontmplus">&nbsp;</span>';
+                                }else{
+                                    elm.innerHTML += '<span class="anime fontmplus">'+c+'</span>';
+                                }
+                            });
+                        });
+                    }
+                /********************************************************/
+
+                }
+                
+                
+                return {
+                    init: initialize
+                }
+            })();
+        /************************************************************/
+
+        /************************************************************/
+            //画面ロード時
+            window.onload = function() {
+                Animation.init();
+            }
+
+        /************************************************************/
+
+        </script>
+</body>
+</html>
