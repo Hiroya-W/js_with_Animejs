@@ -14,6 +14,7 @@
             .bgcolor-bg     { background-color: #303030 }
             /* 汎用 */
             .bgcolor-white  { background-color: white   }
+            .bgcolor-gray   { background-color: gray}
             .bgcolor-black  { background-color: black   }
             .bgcolor-red    { background-color: #FF1461; }   
             .bgcolor-turquoise  { background-color: #5EF3FB }     
@@ -166,17 +167,29 @@
                 position: absolute; top:100px; left: 212px;
                 margin:0;
                 font-size:50px;
-                /*color: white;*/
-                color: black;
+                color: white;
+                /*color: black;*/
             }
 
             /* メダルをゲットしました */
             div.animeText2{
-                position: absolute; top:100px; left: 212px;
+                position: absolute; top:50px; left: 187px;
                 margin:0;
                 font-size:50px;
                 /*color: white;*/
                 color: black;
+            }
+
+            /* 達成しました */
+            div.animeText3{
+                position: absolute;
+                top: 500px; 
+                left: 100px;
+               
+                margin:0;
+                font-size:50px;
+                color: black;
+                /*background-color:#CCCCCC;*/
             }
 
             /* テキスト隠しライン */
@@ -188,6 +201,19 @@
                 bottom: 0;
                 left:600px;
                 right: 0;
+                position: absolute;
+            }
+
+            /* テキスト　下線 */
+            .TextUnderLine{
+                width:700px;
+                height:3px;
+
+                top: -360px;
+                bottom: 0;
+                left:0;
+                right: 0;
+                margin: auto;
                 position: absolute;
             }
 
@@ -328,6 +354,39 @@
             }
         /************************************************************/
 
+        /************************************************************/
+            /* メダルイラスト */
+            /* width 240 height 270 */
+            .medal{    
+                    top: 165px;
+                    bottom: 0;
+                    left: 392px;
+                    right: 0;
+                    position: absolute;
+                    margin: auto;
+            }
+            /* テキストボックス */
+            .textbox{
+            width: 924px;
+            height: 100px;
+
+            /* 中央寄せ */                
+            top: 470px;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            position: absolute;
+            margin: auto;
+
+            border-radius: 10px 50px 10px 50px;
+
+            opacity: 0.8;
+
+            border-left: 3px solid white ;
+            border-bottom: 3px solid white ;
+        }
+        /************************************************************/
+
         </style>
     </head>
     <body class="bgcolor-bg">
@@ -352,6 +411,7 @@
 
     <!--************************************************************-->        
     <!-- グリッド -->    
+    <!--
         <div class="background-area bgcolor-bg"></div>
         <div class="gridlinever ver1 bgcolor-black"></div>
         <div class="gridlinever ver2 bgcolor-black"></div>
@@ -369,12 +429,7 @@
         <div class="gridlinehor hor4 bgcolor-black"></div>
         <div class="gridlinehor hor5 bgcolor-black"></div>
         <div class="gridlinehor hor6 bgcolor-black"></div>
-    <!--************************************************************-->
-
-    <!--************************************************************-->
-    <!-- テキストアニメーション -->
-        <div class="animeText1 fontmplus z-2" id="Text1">おめでとうございます！！</div>      
-        <div class="animeText2 fontmplus z-3" id="Text2">メダルをゲットしました！！</div> 
+    -->
     <!--************************************************************-->
 
     <!--************************************************************-->
@@ -439,9 +494,29 @@
         <div class="sideline1 bgcolor-red"></div>
         <div class="sideline2 bgcolor-red"></div>
     <!--************************************************************-->
+
+    <!--************************************************************-->
+    <!-- テキストアニメーション -->
+        <div class="animeText1 fontmplus z-2" id="Text1">おめでとうございます！！</div>    
+
+        <div class="animeText2 fontmplus z-3" id="Text2">メダルをゲットしました！！</div>
+        <div class="TextUnderLine bgcolor-black z-3"></div>
+
+        <div class="textbox bgcolor-gray z-3"></div>        
+        <div class="animeText3 fontmplus z-3" id="Text3">合計歩行時間10時間を達成しました！</div>
+    <!--************************************************************-->
+    <!--************************************************************-->
+        <div class="medal z-3" id="medal_gold">
+            <img src="../pic/medal_gold.png" width="240" height="270">
+        </div>    
+    <!--************************************************************-->
+    
         <script>
             /* 花火アニメーションの時間 */
             var firetime = 3000;
+
+            /* ページを切り替えるまでの時間 */
+            var ChangePageTime = 15000;
         /*************************************************************/
             var Animation = (function() {
                 /* タイムライン */
@@ -531,11 +606,11 @@
                         .add({
                             targets: ".TextLine",
                             translateX:[
-                                { value: [-700, 1024], duration: 3700, delay:0, elasticity:0, easing: "easeOutExpo"},
+                                { value: [-700, 1024], duration: 3700, delay:10, elasticity:0, easing: "easeOutExpo"},
                             ],
                             scaleX:[
-                                { value: 10, duration: 150, delay:50, easing: "easeOutExpo"},
-                                { value: 1, duration: 700, delay: 240, elasticity: 0}
+                                { value: 12, duration: 150, delay:50, easing: "easeOutExpo"},
+                                { value: 1, duration: 700, delay: 250, elasticity: 0}
                             ],
                             offset: 2000
                         })
@@ -684,6 +759,27 @@
                             ],
                             offset: firetime + 700
                         })
+                    /* メダル表示 */
+                        .add({
+                            targets: ".medal",
+                            opacity: [0,1],
+                            duration: 3000,
+                            offset: 8000,
+                        })
+                    /* テキストボックス */
+                        .add({
+                            targets: ".textbox",
+                            opacity: [0,1],
+                            duration: 3000,
+                            offset: 8000,
+                        })
+                    /* テキストアンダーライン */
+                        .add({
+                            targets: ".TextUnderLine",
+                            translateX: [-1000,0],
+                            duration: 2000,
+                            offset: 6000,
+                        })
 
             /*******************************************************/
 
@@ -695,6 +791,7 @@
                     /* テキストの準備 */
                     spanningFunc(".animeText1");
                     spanningFunc(".animeText2");
+                    spanningFunc(".animeText3");
 
                     /* アニメーションの再生 */
                     Fireworks.play();
@@ -750,6 +847,19 @@
                                     return time + index*cooltime;
                                 }
                     });
+
+                /* 達成しました */
+                    var animObj_3 = anime({
+                        targets:"#Text3",
+                        opacity: [0,1],
+                        duration: 3000,
+                        delay:function(elm,index, ln){
+                                    var time = 8000;
+                                    var cooltime = 50;
+                                    return time + index*cooltime;
+                                }
+                    });
+                    
                 /********************************************************/
 
                 /********************************************************/
@@ -770,8 +880,8 @@
                     }
                 /********************************************************/
 
-                }
-                
+
+                }             
                 
                 return {
                     init: initialize
@@ -782,6 +892,7 @@
         /************************************************************/
             //画面ロード時
             window.onload = function() {
+                /* initialize */
                 Animation.init();
             }
 
