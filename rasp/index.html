@@ -11,11 +11,14 @@
         /*********************************************************/
             /* 色 */
             /* 背景色 */
-            .bgcolor-bg   { background-color: #303030 }
+            .bgcolor-bg     { background-color: #303030 }
             /* 汎用 */
-            .bgcolor-white{ background-color: white   }
-            .bgcolor-black{ background-color: black   }   
-            .bgcolor-lblue{ background-color: #5EF3FB; }        
+            .bgcolor-white  { background-color: white   }
+            .bgcolor-black  { background-color: black   }
+            .bgcolor-red    { background-color: #FF1461; }   
+            .bgcolor-turquoise  { background-color: #5EF3FB }     
+            .bgcolor-purple { background-color: #8453E3 }
+            .bgcolor-citrus { background-color: #A6FF8F }  
 
             /* 花火用 */
             .fworkcolor1{ background-color: #FF1461; }
@@ -52,6 +55,9 @@
             /* 重なり修正用 */
             .z-2{
                 z-index: 2;
+            }
+            .z-3{
+                z-index: 3;
             }
         /************************************************************/
 
@@ -164,6 +170,15 @@
                 color: black;
             }
 
+            /* メダルをゲットしました */
+            div.animeText2{
+                position: absolute; top:100px; left: 212px;
+                margin:0;
+                font-size:50px;
+                /*color: white;*/
+                color: black;
+            }
+
             /* テキスト隠しライン */
             .TextLine{
                 width:75px;
@@ -223,9 +238,118 @@
             }
         /************************************************************/
 
+        /************************************************************/
+            /* 間奏アニメーション */
+            /* 中心の円 */
+            .centercircle1{
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+                /* 中央寄せ */                
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                position: absolute;
+                margin: auto;
+            }
+
+            .centercircle2{
+                width:10px;
+                height:10px;
+                border-radius:50%;
+              
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                position: absolute;
+                margin: auto;
+            }
+
+            /* 中心から出てくるライン */
+            .line1{
+                width:10px;
+                height:15px;
+               
+                top: 0;
+                bottom: 0;
+                left:-150px;
+                right: 0;
+                position: absolute;
+                margin: auto;    
+            }
+            .line2{
+                width:10px;
+                height:15px;
+
+                top: 0;
+                bottom: 0;
+                left:155px;
+                right: 0;
+                position: absolute;
+                margin: auto;    
+            }
+            
+            /* 中心から出てくる三角形 */
+            .triangle1{
+                border-top: 50px solid transparent;
+                border-bottom: 50px solid transparent;
+                border-left: 50px solid #6aa7cd;
+                position: absolute; top: 250px; left: 258px;
+                transform-origin: 252px 50%;
+            }
+
+            .triangle2{
+                border-top: 50px solid transparent;
+                border-bottom: 50px solid transparent;
+                border-left: 50px solid#f6da69;
+                position: absolute; top: 250px; left: 258px;
+                transform-origin: 252px 50%; 
+            }
+
+            /* サイドにあるライン */
+            .sideline1{
+                width:50px;
+                height:700px;
+                /* left 200*/
+                position: absolute; top: -700px; left:100px;
+            }
+
+            .sideline2{
+                width:50px;
+                height:700px;
+                position: absolute; top: -700px; right:100px;
+            }
+
+            /* パスアニメ */
+            .pathanime{
+                position: absolute;
+            }
+        /************************************************************/
+
         </style>
     </head>
     <body class="bgcolor-bg">
+    <!--************************************************************-->       
+        <svg class="pathanime z-2" xmlns="http://www.w3.org/2000/svg" width="1024" height="600" viewBox="0 0 1024 600" version="1.1">
+            <g fill="none" stroke-width="5">
+                <!--    CX,CY 円の中心　rx,xy　円の半径
+                        CX 512 CY 300
+                        M (CX - rx) CY
+                        A rx ry 0 1 0 (CX + rx) CY
+                        A rx ry 0 1 0 (CX - rx) CY                  
+
+                        <path id="a" stroke="#3cf" d="M460,590 A500,500 0,1,0 1460,590"/>
+                        <path id="b" stroke="#3cf" d="M1460,590 A500,500 0,1,0 460,590"/>                                                                                        
+                        <path id="c" stroke="#3cf" d="M460,590 L1460,590"/> 
+                        <circle id="c" cx="960" cy="590" r="500" stroke="#FED28B"/>-->
+                <path id="downcircle"   stroke="#3cf" d="M262,300 A250,250 0,1,0 762,300"/>
+                <path id="upcircle" stroke="#3cf" d="M762,300 A250,250 0,1,0 262,300"/>
+            </g>
+        </svg>
+    <!--************************************************************-->        
+
     <!--************************************************************-->        
     <!-- グリッド -->    
         <div class="background-area bgcolor-bg"></div>
@@ -250,6 +374,7 @@
     <!--************************************************************-->
     <!-- テキストアニメーション -->
         <div class="animeText1 fontmplus z-2" id="Text1">おめでとうございます！！</div>      
+        <div class="animeText2 fontmplus z-3" id="Text2">メダルをゲットしました！！</div> 
     <!--************************************************************-->
 
     <!--************************************************************-->
@@ -298,16 +423,33 @@
             <div id="fring1" class="fring bgcolor-white"></div>
             <div id="fring2" class="fring bgcolor-bg"></div>
             <div class="TextLine bgcolor-white z-2"></div>
-            <div id="drop1" class="drop bgcolor-lblue"></div>
-            <div id="drop2" class="drop bgcolor-lblue"></div>
+            <div id="drop1" class="drop bgcolor-turquoise"></div>
+            <div id="drop2" class="drop bgcolor-turquoise"></div>
         </div>
-        <!--********************************************************-->
+    <!--************************************************************-->
+
+    <!--************************************************************-->
+        <!-- 間奏アニメーション -->
+        <div class="centercircle1 bgcolor-purple z-3"></div>
+        <div class="centercircle2 bgcolor-citrus z-3"></div>
+        <div class="line1 bgcolor-purple z-2"></div>
+        <div class="line2 bgcolor-purple z-2"></div>
+        <div class="triangle1 z-2"></div>
+        <div class="triangle2 z-2"></div>
+        <div class="sideline1 bgcolor-red"></div>
+        <div class="sideline2 bgcolor-red"></div>
+    <!--************************************************************-->
         <script>
+            /* 花火アニメーションの時間 */
+            var firetime = 3000;
         /*************************************************************/
             var Animation = (function() {
                 /* タイムライン */
                 /* 花火 */
                 var Fireworks = anime.timeline({autoplay: false});
+
+                /* 間奏 */
+                var AnimeTimeLine = anime.timeline({autoplay: false});
 
             /*********************************************************/
             /* 花火のタイムライン */
@@ -431,6 +573,117 @@
                         })
                     /**********************************/
 
+            /*******************************************************/
+            /* 間奏アニメーション */
+                AnimeTimeLine
+                    /* 中心の円 */
+                        .add({
+                            targets: ".centercircle1",
+                            scale: [
+                                { value: [0,3],   duration: 300,  delay: 10, elasticity: 0,},
+                                { value: 2.5, duration: 1000, delay: 0,  elasticity: 0},
+                                { value: 15,  duration: 500,  delay: 0,  easing: "easeInBack"},
+                                { value: 100, duration: 1500, delay: 0,  easing: "easeOutExpo"}
+                            ],
+                            offset: firetime
+                        })
+                    /* 中心の円から出てくるライン */
+                        .add({
+                            targets: ".line1",
+                            scaleX: [
+                                { value: [0,10], duration: 500, delay: 10, elasticity: 0,}
+                            ],
+                            scaleY: [
+                                { value: 0, duration: 100, delay: 300, easing: "linear",}
+                            ],  
+                        
+                            translateX: [
+                                { value: -8, duration: 1000, delay: 80, elasticity: 0,}
+                            ],
+                            offset: firetime
+                        })
+                        .add({
+                            targets: ".line2",
+                            scaleX: [
+                                { value: [0,10], duration: 500, delay: 10, elasticity: 0,},
+                            ],
+                            scaleY: [
+                                { value: 0, duration: 100, delay: 300, easing: "linear",}
+                            ],  
+                            translateX: [
+                                { value: 8, duration: 1000, delay: 80, elasticity: 0,}
+                            ],
+                            offset: firetime
+                        })
+                    /* 三角形 */
+                    /* 水色 左 */                    
+                        .add({
+                            targets: ".triangle1",
+                            scale: [
+                                { value: [0,1], dulation: 1000, delay: 0,},
+                            ],
+                            rotate: [
+                                { value: 180, dulation: 100, delay: 600, elasticity: 0}
+                            ],
+                            offset: firetime + 200
+                        })
+                    
+                    /* 黄色 右 */                    
+                        .add({
+                            targets: ".triangle2",
+                            scale: [
+                                { value: [0,1], dulation: 1000, delay: 0,},
+                            ],
+                            rotate: [
+                                { value: [180,360], dulation: 100, delay: 600, elasticity: 0}
+                            ],
+                            offset: firetime + 200  
+                        })
+                    /* パスアニメーション */
+                        .add({
+                            targets:"#upcircle",
+                            strokeDashoffset:[
+                                anime.setDashoffset, 2356
+                            ],
+                            //opacity:[1,0],
+                            easing:'linear',
+                            autoplay:true,
+                            duration:500,
+                            delay:0,
+                            loop:false,
+                            offset: firetime + 880
+                        })
+                        .add({
+                            targets:"#downcircle",
+                            strokeDashoffset:[
+                                anime.setDashoffset, 2356
+                            ],
+                            //opacity:[1,0],
+                            easing:'linear',
+                            autoplay:true,
+                            duration:500,
+                            delay:0,
+                            loop:false,
+                            offset: firetime + 880
+                        })
+                    /* 中心の円 */
+                        .add({
+                            targets: ".centercircle2",
+                            scale: [
+                                { value: [0,6], dulation: 3000, delay: 0,},
+                                { value: 35,     duration: 500,  delay: 800, easing: "easeInBack"},
+                                { value: 500,    duration: 1500, delay: 0,   easing: "easeOutExpo"}
+                            ],
+                            offset: firetime + 700
+                        })
+                    /* サイドのライン */
+                        .add({
+                            targets: [".sideline1", ".sideline2"],
+                            translateY:[
+                                { value: 650, duration: 1000, delay: 0, elasticity: 0, easing: "easeOutExpo",}
+                            ],
+                            offset: firetime + 700
+                        })
 
             /*******************************************************/
 
@@ -441,9 +694,11 @@
 
                     /* テキストの準備 */
                     spanningFunc(".animeText1");
+                    spanningFunc(".animeText2");
 
                     /* アニメーションの再生 */
                     Fireworks.play();
+                    AnimeTimeLine.play();
 
                 /****************************************************/
                 /* テキストアニメーション */
@@ -481,6 +736,19 @@
                                 }
                             }
                         ],
+                    });
+
+                /* メダルをゲットしました */
+                    var TextAnime2 = anime({
+                        targets:"#Text2 .anime",
+                        translateY: [200,0],
+                        duration: 1000,
+                        opacity: [0,1],
+                        delay:function(elm,index, ln){
+                                    var time = 6000;
+                                    var cooltime = 50;
+                                    return time + index*cooltime;
+                                }
                     });
                 /********************************************************/
 
