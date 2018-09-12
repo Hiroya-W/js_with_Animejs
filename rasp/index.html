@@ -516,7 +516,7 @@
             var firetime = 3000;
 
             /* ページを切り替えるまでの時間 */
-            var ChangePageTime = 15000;
+            var ChangePageTime = 3000;
         /*************************************************************/
             var Animation = (function() {
                 /* タイムライン */
@@ -779,14 +779,33 @@
                             translateX: [-1000,0],
                             duration: 2000,
                             offset: 6000,
+                            /* アニメーションが終了したら実行 */
+                            //complete: ChangePage,
                         })
 
+            /*******************************************************/
+            /* ページ切替 */
+                function ChangePage() {
+                    
+                    /* 指定時間後に実行 */
+                    setTimeout(Change, ChangePageTime);
+
+                    function Change(){
+                        /* 切り替えるページ */
+                        document.location.href = "http://www.ipentec.com";
+                    }                    
+                }
+
+            /*******************************************************/                
             /*******************************************************/
 
             /* イニシャライズ */
                 function initialize(){
                     /* bodyにreadyクラスを追加する */
                     document.body.classList.add("ready");
+
+                    /* CSVファイル読み込み */
+                    getCSV();
 
                     /* テキストの準備 */
                     spanningFunc(".animeText1");
@@ -879,6 +898,55 @@
                         });
                     }
                 /********************************************************/
+
+                /********************************************************/
+
+                    //CSVファイルを読み込む関数getCSV()の定義
+                    function getCSV(){
+                        var req = new XMLHttpRequest(); // HTTPでファイルを読み込むためのXMLHttpRrequestオブジェクトを生成
+                        req.open("get", "load.csv", true); // アクセスするファイルを指定
+                        req.send(null); // HTTPリクエストの発行
+                        
+                        // レスポンスが返ってきたらconvertCSVtoArray()を呼ぶ	
+                        req.onload = function(){
+                        convertCSVtoArray(req.responseText); // 渡されるのは読み込んだCSVデータ
+                        }
+                    }
+
+                    //Chromeではファイルの読み込みに問題あり
+                    //cd C:\Program Files (x86)\Google\Chrome\Application
+                    //chrome.exe --allow-file-access-from-files
+                    // 読み込んだCSVデータを二次元配列に変換する関数convertCSVtoArray()の定義
+                    function convertCSVtoArray(str){ // 読み込んだCSVデータが文字列として渡される
+                        //var result = []; // 最終的な二次元配列を入れるための配列
+                        var tmp = str.split("\n"); // 改行を区切り文字として行を要素とした配列を生成
+
+                        // 各行ごとにカンマで区切った文字列を要素とした二次元配列を生成
+                        for(var i=0;i<tmp.length;++i){
+                            result[i] = tmp[i].split(',');
+                        }
+
+                        //行数が返ってくる
+                        //alert(result.length); 
+                        //alert(result[result.length-1][0]); 
+                        
+                        var elem = document.getElementById("Text3");
+                        //var elem = document.document.querySelectorAll("at3");
+                        var str1 = "";
+
+                        if(result[result.length-1][0] == "time"){
+                            str1 = "合計歩行時間" + result[result.length-1][1] + "時間を達成しました！";
+                        }
+                        else if(result[result.length-1][0] == "distance"){
+                            str1 = "合計歩行距離" + result[result.length-1][1] + "kmを達成しました！";
+                        }
+                        else if(result[result.length-1][0] == "count"){
+                            str1 = "スポット訪問回数" + result[result.length-1][2] + "回を達成しました！";
+                        }
+                        elem.innerHTML = str1;
+                        //spanningFunc(".animeText3");   
+                    }
+                    /*********************************************************/
 
 
                 }             
