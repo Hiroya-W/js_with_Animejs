@@ -1,2 +1,3 @@
 # js_with_Animejs
-anime.js test
+anime.jsを使ったアニメーションの作成
+モーショングラフィックスを作ってみたい
